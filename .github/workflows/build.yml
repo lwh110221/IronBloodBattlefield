@@ -1,0 +1,76 @@
+name: Build and Release Mod
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'b*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: Restore NuGet Packages
+      run: nuget restore IronBloodBattlefield.sln
+
+    - name: Build Release Version
+      run: |
+        msbuild /p:Configuration=Release /p:Platform=x64 IronBloodBattlefield.sln
+        
+    - name: Build Debug Version
+      run: |
+        msbuild /p:Configuration=Debug /p:Platform=x64 IronBloodBattlefield.sln
+        
+    - name: Prepare Release Package
+      run: |
+        mkdir -p Release\IronBloodBattlefield\bin\Win64_Shipping_Client
+        copy "IronBloodBattlefield\bin\Release\IronBloodBattlefield.dll" "Release\IronBloodBattlefield\bin\Win64_Shipping_Client\"
+        copy "IronBloodBattlefield\bin\Release\IronBloodBattlefield.pdb" "Release\IronBloodBattlefield\bin\Win64_Shipping_Client\"
+        copy "IronBloodBattlefield\SubModule.xml" "Release\IronBloodBattlefield\"
+        xcopy /E /I "IronBloodBattlefield\ModuleData" "Release\IronBloodBattlefield\ModuleData"
+        Compress-Archive -Path Release\IronBloodBattlefield -DestinationPath IronBloodBattlefield.zip -Force
+        
+    - name: Prepare Debug Package
+      run: |
+        mkdir -p Debug\IronBloodBattlefield\bin\Win64_Shipping_Client
+        copy "IronBloodBattlefield\bin\Debug\IronBloodBattlefield.dll" "Debug\IronBloodBattlefield\bin\Win64_Shipping_Client\"
+        copy "IronBloodBattlefield\bin\Debug\IronBloodBattlefield.pdb" "Debug\IronBloodBattlefield\bin\Win64_Shipping_Client\"
+        copy "IronBloodBattlefield\SubModule.xml" "Debug\IronBloodBattlefield\"
+        xcopy /E /I "IronBloodBattlefield\ModuleData" "Debug\IronBloodBattlefield\ModuleData"
+        Compress-Archive -Path Debug\IronBloodBattlefield -DestinationPath IronBloodBattlefield_Debug.zip -Force
+      
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          IronBloodBattlefield.zip
+          IronBloodBattlefield_Debug.zip
+        name: IronBloodBattlefield ${{ github.ref_name }}
+        body: |
+          ## 铁血战场 ${{ github.ref_name }}
+          
+          ### 发布说明
+          - Release版本：用于正常游戏
+          - Debug版本：用于开发调试
+          
+          ### 安装说明
+          1. 解压到游戏Modules目录
+          2. 启动启动器，在Mods中启用本mod
+          3. 开始游戏
+        draft: false
+        prerelease: ${{ contains(github.ref, 'b') }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
