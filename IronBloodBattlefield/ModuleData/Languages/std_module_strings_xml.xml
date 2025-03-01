@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <!-- Feature Settings -->
+    <string id="IronBloodBattlefield_Enable_Group" text="Feature Settings" />
+    <string id="IronBloodBattlefield_Enable" text="Enable IronBloodBattlefield" />
+    <string id="IronBloodBattlefield_Enable_Hint" text="Enable IronBloodBattlefield. When enabled, soldiers will not retreat randomly. Tip: Does not affect Siege Battles" />
+    <string id="IronBloodBattlefield_PlayerEnable" text="Affect Player Side" />
+    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="Whether it affects the player side" />
+
+    <!-- Retreat Threshold Settings -->
+    <string id="IronBloodBattlefield_RetreatThreshold_Group" text="Retreat Threshold Settings" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="Enemy Retreat Threshold" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="Allows enemy soldiers to retreat when their number falls below this value" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="Player Retreat Threshold" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="Allows player soldiers to retreat when their number falls below this value" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="Buff Disappearance Time After Falling Below Threshold" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="Buff disappearance time after falling below the set number. If no reinforcements arrive within this time, the buff disappears (Unit: Second)" />
+  </strings>
+</base>

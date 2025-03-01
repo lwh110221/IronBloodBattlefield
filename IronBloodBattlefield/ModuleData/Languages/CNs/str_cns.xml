@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="简体中文" />
+  </tags>
+  <strings>
+    <!-- 功能设置 -->
+    <string id="IronBloodBattlefield_Enable_Group" text="功能设置" />
+    <string id="IronBloodBattlefield_Enable" text="启用铁血战场" />
+    <string id="IronBloodBattlefield_Enable_Hint" text="启用铁血战场功能。启用后，士兵不会随机撤退. Tip：不对攻城战生效" />
+    <string id="IronBloodBattlefield_PlayerEnable" text="对玩家方生效" />
+    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="是否对玩家方部队生效" />
+
+    <!-- 撤退阈值设置 -->
+    <string id="IronBloodBattlefield_RetreatThreshold_Group" text="撤退阈值设置" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="敌方撤退阈值" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="当敌方士兵数量低于此值时允许撤退" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="玩家方撤退阈值" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="当玩家方士兵数量低于此值时允许撤退" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="低于阈值后Buff消失时间" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="低于设置数量后Buff消失时间，如果在这个时间内没有援军到达，则Buff消失（单位：秒）" />
+  </strings>
+</base> 
