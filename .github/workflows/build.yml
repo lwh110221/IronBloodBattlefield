@@ -23,15 +23,15 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
       
     - name: Restore NuGet Packages
-      run: nuget restore IronBloodBattlefield.sln
+      run: nuget restore IronBloodBattlefield\IronBloodBattlefield.csproj
 
     - name: Build Release Version
       run: |
-        msbuild /p:Configuration=Release /p:Platform=x64 IronBloodBattlefield.sln
+        msbuild /p:Configuration=Release /p:Platform=x64 IronBloodBattlefield\IronBloodBattlefield.csproj
         
     - name: Build Debug Version
       run: |
-        msbuild /p:Configuration=Debug /p:Platform=x64 IronBloodBattlefield.sln
+        msbuild /p:Configuration=Debug /p:Platform=x64 IronBloodBattlefield\IronBloodBattlefield.csproj
         
     - name: Prepare Release Package
       run: |
