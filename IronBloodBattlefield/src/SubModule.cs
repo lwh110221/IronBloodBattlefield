@@ -27,10 +27,10 @@ namespace IronBloodBattlefield
                 DebugLog("MCM设置已初始化");
 #endif
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
-                DebugLog($"MCM设置初始化失败: {ex.Message}");
+                DebugLog($"MCM设置初始化失败: {e.Message}");
 #endif
             }
         }
@@ -59,10 +59,10 @@ namespace IronBloodBattlefield
                 DebugLog($"确认次数：{ModSettings.RetreatConfirmationCount.Value}");
 #endif
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
-                DebugLog($"补丁应用或设置确认失败: {ex.Message}");
+                DebugLog($"补丁应用或设置确认失败: {e.Message}");
 #endif
             }
         }

@@ -68,7 +68,7 @@ namespace IronBloodBattlefield
 #endif
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
                 DebugLog($"士气系统错误(恐慌): {e.Message}");
@@ -98,7 +98,7 @@ namespace IronBloodBattlefield
                     result = true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
                 DebugLog($"士气系统错误(阵亡): {e.Message}");
@@ -125,10 +125,10 @@ namespace IronBloodBattlefield
                     __result = 0f;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
-                DebugLog($"士气系统错误(伤亡): {ex.Message}");
+                DebugLog($"士气系统错误(伤亡): {e.Message}");
 #endif
             }
         }
@@ -149,7 +149,7 @@ namespace IronBloodBattlefield
                     __result = 0f;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 #if DEBUG
                 DebugLog($"士气系统错误(士气变化): {e.Message}");
