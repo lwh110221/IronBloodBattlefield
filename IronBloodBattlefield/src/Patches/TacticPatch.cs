@@ -55,7 +55,7 @@ namespace IronBloodBattlefield
                 DebugLog($"阻止敌方撤退");
 #endif
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
                 DebugLog($"战术系统错误: {e.Message}");

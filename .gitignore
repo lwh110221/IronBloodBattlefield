@@ -1,0 +1,6 @@
+.vs/
+.vscode/
+bin/
+obj/
+IronBloodBattlefield/IronBloodBattlefield.csproj.user
+IronBloodBattlefield.sln
