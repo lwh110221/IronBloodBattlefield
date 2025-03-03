@@ -1,5 +1,7 @@
 using TaleWorlds.MountAndBlade;
 using IronBloodBattlefield.Settings;
+using TaleWorlds.Core;
+using System.Linq;
 using System.Diagnostics;
 
 namespace IronBloodBattlefield.Util
@@ -14,6 +16,11 @@ namespace IronBloodBattlefield.Util
         private static int _cachedDefenderCount;
         private static int _cachedPlayerCount;
         private static int _cachedEnemyCount;
+        
+        // 缓存的初始总兵力
+        private static int _initialAttackerTotalCount;
+        private static int _initialDefenderTotalCount;
+        private static bool _hasInitialCounts;
         
         // 上次更新时间
         private static float _lastUpdateTime;
@@ -54,8 +61,56 @@ namespace IronBloodBattlefield.Util
             _cachedPlayerCount = 0;
             _cachedEnemyCount = 0;
             _lastUpdateTime = 0f;
+            _hasInitialCounts = false;
+            _initialAttackerTotalCount = 0;
+            _initialDefenderTotalCount = 0;
 #if DEBUG
             DebugLog("重置所有检查状态");
+#endif
+        }
+
+        /// <summary>
+        /// 初始化总兵力数量
+        /// </summary>
+        private static void InitializeTotalCounts(Mission mission)
+        {
+            if (_hasInitialCounts || mission == null) return;
+
+            var spawnLogic = mission.GetMissionBehavior<MissionAgentSpawnLogic>();
+            if (spawnLogic == null) return;
+
+            // 检查是否在部署阶段
+            if (!spawnLogic.IsInitialSpawnOver)
+            {
+#if DEBUG
+                DebugLog("部署阶段，跳过初始化总兵力");
+#endif
+                return;
+            }
+
+            // 记录初始总兵力
+            int activeAttackers = spawnLogic.NumberOfActiveAttackerTroops;
+            int remainingAttackers = spawnLogic.NumberOfRemainingAttackerTroops;
+            int activeDefenders = mission.DefenderTeam.ActiveAgents.Where(agent => !agent.IsMount).Count();
+            int remainingDefenders = spawnLogic.NumberOfRemainingDefenderTroops;
+
+            // 只有当活跃部队数量大于0时才初始化
+            if (activeAttackers > 0 && activeDefenders > 0)
+            {
+                _initialAttackerTotalCount = activeAttackers + remainingAttackers;
+                _initialDefenderTotalCount = activeDefenders + remainingDefenders;
+                _hasInitialCounts = true;
+
+#if DEBUG
+                DebugLog($"初始化总兵力 - 进攻方：{_initialAttackerTotalCount}（当前{activeAttackers} + 增援{remainingAttackers}），" +
+                        $"防守方：{_initialDefenderTotalCount}（当前{activeDefenders} + 增援{remainingDefenders}）");
+#endif
+            }
+#if DEBUG
+            else
+            {
+                DebugLog($"等待部队生成 - 进攻方当前：{activeAttackers}，防守方当前：{activeDefenders}");
+            }
 #endif
         }
 
@@ -351,8 +406,42 @@ namespace IronBloodBattlefield.Util
         {
             if (mission == null) return false;
 
-            var (_, enemyCount) = GetPlayerAndEnemyCount(mission);
-            return _isEnemyConfirmed;
+            var team = mission.PlayerEnemyTeam;
+            if (team == null) return false;
+
+            // 如果已经确认可以撤退，直接返回true，避免重复计算
+            if (_isEnemyConfirmed && !ModSettings.UsePercentageMode.Value)
+            {
+#if DEBUG
+                DebugLog("敌方已确认可以撤退，跳过计算");
+#endif
+                return true;
+            }
+
+            if (ModSettings.UsePercentageMode.Value)
+            {
+                // 获取总伤亡比例
+                int totalTroops = GetTotalTroopCount(team);
+                int casualties = GetCasualtiesCount(team);
+                
+                if (totalTroops == 0) return false;
+                
+                float casualtyPercentage = (float)casualties / totalTroops * 100f;
+#if DEBUG
+                DebugLog($"敌方总兵力：{totalTroops}，伤亡：{casualties}，伤亡比例：{casualtyPercentage}%，阈值：{ModSettings.EnemyRetreatPercentage.Value}%");
+#endif
+                bool canRetreat = casualtyPercentage >= ModSettings.EnemyRetreatPercentage.Value;
+                if (canRetreat)
+                {
+                    _isEnemyConfirmed = true; 
+                }
+                return canRetreat;
+            }
+            else
+            {
+                var (_, enemyCount) = GetPlayerAndEnemyCount(mission);
+                return _isEnemyConfirmed;
+            }
         }
 
         /// <summary>
@@ -364,8 +453,42 @@ namespace IronBloodBattlefield.Util
         {
             if (mission == null) return false;
 
-            var (playerCount, _) = GetPlayerAndEnemyCount(mission);
-            return _isPlayerConfirmed;
+            var team = mission.PlayerTeam;
+            if (team == null) return false;
+
+            // 如果已经确认可以撤退，直接返回true，避免重复计算
+            if (_isPlayerConfirmed && !ModSettings.UsePercentageMode.Value)
+            {
+#if DEBUG
+                DebugLog("玩家方已确认可以撤退，跳过计算");
+#endif
+                return true;
+            }
+
+            if (ModSettings.UsePercentageMode.Value)
+            {
+                // 获取总伤亡比例
+                int totalTroops = GetTotalTroopCount(team);
+                int casualties = GetCasualtiesCount(team);
+                
+                if (totalTroops == 0) return false;
+                
+                float casualtyPercentage = (float)casualties / totalTroops * 100f;
+#if DEBUG
+                DebugLog($"玩家方总兵力：{totalTroops}，伤亡：{casualties}，伤亡比例：{casualtyPercentage}%，阈值：{ModSettings.PlayerRetreatPercentage.Value}%");
+#endif
+                bool canRetreat = casualtyPercentage >= ModSettings.PlayerRetreatPercentage.Value;
+                if (canRetreat)
+                {
+                    _isPlayerConfirmed = true;
+                }
+                return canRetreat;
+            }
+            else
+            {
+                var (playerCount, _) = GetPlayerAndEnemyCount(mission);
+                return _isPlayerConfirmed;
+            }
         }
 
         /// <summary>
@@ -384,6 +507,71 @@ namespace IronBloodBattlefield.Util
         public static bool IsCurrentPlayerBelowThreshold()
         {
             return IsPlayerBelowThreshold(Mission.Current);
+        }
+
+        private static int GetTotalTroopCount(Team team)
+        {
+            if (team == null) return 0;
+            
+            var mission = Mission.Current;
+            if (mission == null) return 0;
+
+            // 初始化总兵力（如果还未初始化）
+            InitializeTotalCounts(mission);
+
+            var battleSide = team.Side;
+            bool isPlayerTeam = (team == mission.PlayerTeam);
+            bool isPlayerAttacker = IsPlayerAttacker(mission);
+
+#if DEBUG
+            DebugLog($"获取总兵力 - 是否玩家队伍：{isPlayerTeam}，玩家是否进攻方：{isPlayerAttacker}，当前队伍阵营：{battleSide}");
+#endif
+
+            // 返回缓存的初始总兵力
+            if (battleSide == BattleSideEnum.Attacker)
+            {
+                return _initialAttackerTotalCount;
+            }
+            else if (battleSide == BattleSideEnum.Defender)
+            {
+                return _initialDefenderTotalCount;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 获取队伍的伤亡数量
+        /// </summary>
+        private static int GetCasualtiesCount(Team team)
+        {
+            if (team == null || Mission.Current == null) return 0;
+            
+            int casualties = 0;
+            
+            var casualtyHandler = Mission.Current.GetMissionBehavior<CasualtyHandler>();
+            if (casualtyHandler != null)
+            {
+                foreach (Formation formation in team.FormationsIncludingEmpty)
+                {
+                    if (formation != null)
+                    {
+                        casualties += casualtyHandler.GetCasualtyCountOfFormation(formation);
+                    }
+                }
+#if DEBUG
+                DebugLog($"队伍 {team.Side} 的伤亡数量：{casualties}");
+#endif
+            }
+            else
+            {
+                casualties = team.QuerySystem.DeathCount;
+#if DEBUG
+                DebugLog($"使用QuerySystem获取队伍 {team.Side} 的死亡数量：{casualties}");
+#endif
+            }
+            
+            return casualties;
         }
     }
 }

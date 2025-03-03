@@ -9,17 +9,23 @@
     <!-- Feature Settings -->
     <string id="IronBloodBattlefield_Enable_Group" text="Feature Settings" />
     <string id="IronBloodBattlefield_Enable" text="Enable IronBloodBattlefield" />
-    <string id="IronBloodBattlefield_Enable_Hint" text="Enable IronBloodBattlefield. When enabled, soldiers will not retreat randomly. Tip: Does not affect Siege Battles" />
-    <string id="IronBloodBattlefield_PlayerEnable" text="Affect Player Side" />
-    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="Whether it affects the player side" />
+    <string id="IronBloodBattlefield_Enable_Hint" text="Enable IronBloodBattlefield. When enabled, soldiers will not retreat until specific conditions are met. Note: Does not affect Siege Battles" />
+    <string id="IronBloodBattlefield_PlayerEnable" text="Apply to Player's Army" />
+    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="Whether the retreat restrictions also apply to player's troops" />
+    <string id="IronBloodBattlefield_UsePercentageMode" text="Use Casualty Percentage Mode" />
+    <string id="IronBloodBattlefield_UsePercentageMode_Hint" text="When enabled, troops will retreat based on casualty percentage instead of remaining troop count" />
 
     <!-- Retreat Threshold Settings -->
     <string id="IronBloodBattlefield_RetreatThreshold_Group" text="Retreat Threshold Settings" />
-    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="Enemy Retreat Threshold" />
-    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="Allows enemy soldiers to retreat when their number falls below this value" />
-    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="Player Retreat Threshold" />
-    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="Allows player soldiers to retreat when their number falls below this value" />
-    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="Buff Disappearance Time After Falling Below Threshold" />
-    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="Buff disappearance time after falling below the set number. If no reinforcements arrive within this time, the buff disappears (Unit: Second)" />
+    <string id="IronBloodBattlefield_EnemyRetreatPercentage" text="Enemy Retreat Casualty Percentage" />
+    <string id="IronBloodBattlefield_EnemyRetreatPercentage_Hint" text="Enemy troops will be allowed to retreat when their casualties reach this percentage of their total force (5% - 100%)" />
+    <string id="IronBloodBattlefield_PlayerRetreatPercentage" text="Player's Army Retreat Casualty Percentage" />
+    <string id="IronBloodBattlefield_PlayerRetreatPercentage_Hint" text="Player's troops will be allowed to retreat when their casualties reach this percentage of their total force (5% - 100%)" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="Enemy Retreat Troop Count" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="[Fixed Count Mode] Enemy troops will be allowed to retreat when their remaining troops fall below this number" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="Player's Army Retreat Troop Count" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="[Fixed Count Mode] Player's troops will be allowed to retreat when their remaining troops fall below this number" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="Retreat Confirmation Time" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="[Fixed Count Mode] Time in seconds that troops must remain below the threshold before retreat is allowed. Reinforcements arriving will reset this timer" />
   </strings>
 </base>

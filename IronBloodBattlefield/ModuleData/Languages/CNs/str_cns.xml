@@ -9,17 +9,23 @@
     <!-- 功能设置 -->
     <string id="IronBloodBattlefield_Enable_Group" text="功能设置" />
     <string id="IronBloodBattlefield_Enable" text="启用铁血战场" />
-    <string id="IronBloodBattlefield_Enable_Hint" text="启用铁血战场功能。启用后，士兵不会随机撤退. Tip：不对攻城战生效" />
-    <string id="IronBloodBattlefield_PlayerEnable" text="对玩家方生效" />
-    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="是否对玩家方部队生效" />
+    <string id="IronBloodBattlefield_Enable_Hint" text="启用铁血战场功能。启用后，士兵只有在满足特定条件时才会撤退。注意：不对攻城战生效" />
+    <string id="IronBloodBattlefield_PlayerEnable" text="对玩家部队生效" />
+    <string id="IronBloodBattlefield_PlayerEnable_Hint" text="是否对玩家的部队应用撤退限制" />
+    <string id="IronBloodBattlefield_UsePercentageMode" text="使用伤亡百分比模式" />
+    <string id="IronBloodBattlefield_UsePercentageMode_Hint" text="启用后，部队撤退将基于总兵力（部队总人数）的伤亡百分比判断而不是剩余部队数量" />
 
     <!-- 撤退阈值设置 -->
     <string id="IronBloodBattlefield_RetreatThreshold_Group" text="撤退阈值设置" />
-    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="敌方撤退阈值" />
-    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="当敌方士兵数量低于此值时允许撤退" />
-    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="玩家方撤退阈值" />
-    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="当玩家方士兵数量低于此值时允许撤退" />
-    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="低于阈值后Buff消失时间" />
-    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="低于设置数量后Buff消失时间，如果在这个时间内没有援军到达，则Buff消失（单位：秒）" />
+    <string id="IronBloodBattlefield_EnemyRetreatPercentage" text="敌军撤退伤亡百分比" />
+    <string id="IronBloodBattlefield_EnemyRetreatPercentage_Hint" text="当敌军伤亡达到其总兵力的这个百分比时允许撤退（5% - 100%）" />
+    <string id="IronBloodBattlefield_PlayerRetreatPercentage" text="玩家部队撤退伤亡百分比" />
+    <string id="IronBloodBattlefield_PlayerRetreatPercentage_Hint" text="当玩家部队伤亡达到其总兵力的这个百分比时允许撤退（5% - 100%）" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold" text="敌军撤退人数" />
+    <string id="IronBloodBattlefield_EnemyRetreatThreshold_Hint" text="[固定数量模式] 当敌军剩余部队数量低于此数值时允许撤退" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold" text="玩家部队撤退人数" />
+    <string id="IronBloodBattlefield_PlayerRetreatThreshold_Hint" text="[固定数量模式] 当玩家剩余部队数量低于此数值时允许撤退" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount" text="撤退确认时间" />
+    <string id="IronBloodBattlefield_RetreatConfirmationCount_Hint" text="[固定数量模式] 部队数量低于阈值后需要持续多少秒才允许撤退。如果期间有增援到达会重置计时" />
   </strings>
 </base> 
