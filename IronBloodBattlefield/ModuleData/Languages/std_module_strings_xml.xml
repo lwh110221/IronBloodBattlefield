@@ -4,6 +4,8 @@
     <tag language="English" />
   </tags>
   <strings>
+    <!-- Display Name -->
+    <string id="IronBloodBattlefield_DisplayName" text="IronBloodBattlefield - Ahao221" />
     <!-- Feature Settings -->
     <string id="IronBloodBattlefield_Enable_Group" text="Feature Settings" />
     <string id="IronBloodBattlefield_Enable" text="Enable IronBloodBattlefield" />

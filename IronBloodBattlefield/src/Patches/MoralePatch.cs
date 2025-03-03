@@ -50,6 +50,7 @@ namespace IronBloodBattlefield
         [HarmonyPostfix]
         public static void PostfixCanPanic(Agent agent, ref bool __result)
         {
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try
             {
                 if (!BattleCheck.IsValidFieldBattle(Mission.Current))
@@ -74,6 +75,7 @@ namespace IronBloodBattlefield
                 DebugLog($"士气系统错误(恐慌): {e.Message}");
 #endif
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
         }
 
         [HarmonyPatch("CalculateMaxMoraleChangeDueToAgentIncapacitated")]
@@ -81,6 +83,7 @@ namespace IronBloodBattlefield
         public static bool PrefixMoraleChangeIncapacitated(Agent affectedAgent, AgentState affectedAgentState, Agent affectorAgent, in KillingBlow killingBlow, ref ValueTuple<float, float> __result)
         {
             bool result;
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try
             {
                 if (!BattleCheck.IsValidFieldBattle(Mission.Current))
@@ -105,6 +108,7 @@ namespace IronBloodBattlefield
 #endif
                 result = true;
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
             return result;
         }
 
@@ -112,6 +116,7 @@ namespace IronBloodBattlefield
         [HarmonyPostfix]
         public static void PostfixCasualtiesFactor(BattleSideEnum battleSide, ref float __result)
         {
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try
             {
                 if (!BattleCheck.IsValidFieldBattle(Mission.Current))
@@ -131,12 +136,14 @@ namespace IronBloodBattlefield
                 DebugLog($"士气系统错误(伤亡): {e.Message}");
 #endif
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
         }
 
         [HarmonyPatch("CalculateMoraleChangeToCharacter")]
         [HarmonyPostfix]
         public static void PostfixMoraleChange(Agent agent, float maxMoraleChange, ref float __result)
         {
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try
             {
                 if (!BattleCheck.IsValidFieldBattle(Mission.Current))
@@ -155,6 +162,7 @@ namespace IronBloodBattlefield
                 DebugLog($"士气系统错误(士气变化): {e.Message}");
 #endif
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
         } 
     }
 }

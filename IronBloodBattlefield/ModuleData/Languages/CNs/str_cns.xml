@@ -4,6 +4,8 @@
     <tag language="简体中文" />
   </tags>
   <strings>
+    <!-- 名称 -->
+    <string id="IronBloodBattlefield_DisplayName" text="铁血战场 - Ahao221" />
     <!-- 功能设置 -->
     <string id="IronBloodBattlefield_Enable_Group" text="功能设置" />
     <string id="IronBloodBattlefield_Enable" text="启用铁血战场" />

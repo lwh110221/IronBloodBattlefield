@@ -20,6 +20,7 @@ namespace IronBloodBattlefield
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try 
             {
                 var _ = McmSettings.Instance;
@@ -33,11 +34,13 @@ namespace IronBloodBattlefield
                 DebugLog($"MCM设置初始化失败: {e.Message}");
 #endif
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
         }
 
         public override void OnGameInitializationFinished(Game game)
         {
             base.OnGameInitializationFinished(game);
+#pragma warning disable CS0168 // 声明了变量，但从未使用过
             try
             {
                 if (!PatchesApplied)
@@ -65,6 +68,7 @@ namespace IronBloodBattlefield
                 DebugLog($"补丁应用或设置确认失败: {e.Message}");
 #endif
             }
+#pragma warning restore CS0168 // 声明了变量，但从未使用过
         }
     }
 }

@@ -7,7 +7,7 @@ namespace IronBloodBattlefield.Settings{
     public class McmSettings : AttributeGlobalSettings<McmSettings>
     {
         public override string Id => "IronBloodBattlefield_v1";
-        public override string DisplayName => "IronBloodBattlefield - Ahao221";
+        public override string DisplayName => new TextObject("{=IronBloodBattlefield_DisplayName}IronBloodBattlefield - Ahao221").ToString();
         public override string FolderName => "IronBloodBattlefield";
         public override string FormatType => "json";
 
